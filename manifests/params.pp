@@ -4,22 +4,17 @@ class php::params {
   $purge_dirs = false
 
   # php.ini default settings
-  $cli_display_errors         = 'On'
-  $cli_display_startup_errors = 'On'
-  $cli_error_reporting        = 'E_ALL | E_STRICT'
-  $cli_post_max_size          = '64M'
-  $cli_upload_max_filesize    = '64M'  
+  $memory_limit           = '128M'
+  $max_execution_time     = '30'
+  $max_input_time         = '60'
+  $display_errors         = 'On'
+  $display_startup_errors = 'On'
+  $error_reporting        = 'E_ALL | E_STRICT'
+  $post_max_size          = '64M'
+  $upload_max_filesize    = '64M'
 
-  $apache_max_execution_time     = 30
-  $apache_max_input_time         = 60
-  $apache_display_errors         = 'On'
-  $apache_display_startup_errors = 'On'
-  $apache_error_reporting        = 'E_ALL | E_STRICT'
-  $apache_post_max_size          = '64M'
-  $apache_upload_max_filesize    = '64M'  
-  
-  case $operatingsystem {
-    /(Ubuntu|Debian)/: {
+  case $::operatingsystem {
+    'ubuntu', 'debian': {
       $base_dir = "/etc/php5/"
       $extra_dir = "${base_dir}extra/"
       $conf_dir = "${base_dir}conf.d/"
@@ -39,7 +34,9 @@ class php::params {
       $apache_dir = "${base_dir}apache2/"
       $apache_ini = "${apache_dir}php.ini"
       $apache_package_name = "libapache2-mod-php5"
-      $apache_service_name = "apache2"
+
+      #FIXME remove service name from this module.
+      $apache_name = "apache2"
       $tpl_php53apache_ini = "php/php-apache.ini.erb"
     }
   }

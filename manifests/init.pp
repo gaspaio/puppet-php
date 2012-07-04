@@ -1,57 +1,63 @@
 class php(
-  $cli_display_errors         = $php::params::cli_display_errors,
-  $cli_display_startup_errors = $php::params::cli_display_startup_errors,
-  $cli_error_reporting        = $php::params::cli_error_reporting,
-  $cli_post_max_size          = $php::params::cli_post_max_size,
-  $cli_upload_max_filesize    = $php::params::cli_upload_max_filesize,
-  $purge_dirs                 = $php::params::purge_dirs
+  $cli_display_errors         = $php::params::display_errors,
+  $cli_display_startup_errors = $php::params::display_startup_errors,
+  $cli_error_reporting        = $php::params::error_reporting,
+  $cli_post_max_size          = $php::params::post_max_size,
+  $cli_upload_max_filesize    = $php::params::upload_max_filesize
 ) inherits php::params {
 
-  package { 'php-cli': 
+  package { 'php_cli':
     name   => $php::params::cli_package_name,
     ensure => present,
   }
 
-  file { $php::params::extra_dir:
+  file { 'php_cli_dir':
+    path    => $php::params::cli_dir,
     owner   => root,
     group   => root,
     purge   => $php::params::purge_dirs,
     recurse => true,
     force   => true,
-    require => Package['php-cli'],
+    require => Package['php_cli'],
     ensure  => directory,
   }
 
-  file { $php::params::conf_dir:
+  # Main php config directory
+  file { 'php_config_dir':
+  	path    => $php::params::conf_dir,
     owner   => root,
     group   => root,
     purge   => $php::params::purge_dirs,
     recurse => true,
     force   => true,
-    require => Package['php-cli'],
+    require => [File['php_cli_dir'], Package['php_cli']],
+    ensure  => directory,
+  }
+
+  # Symbolic link from the cli config dir to the main config dir
+  file { "${php::params::cli_dir}conf.d":
+    ensure => "../conf.d",
+    require => [File['php_cli_dir'], Package['php_cli']],
+  }
+
+  file { 'php_extra_dir':
+    path    => $php::params::extra_dir,
+    owner   => root,
+    group   => root,
+    purge   => $php::params::purge_dirs,
+    recurse => true,
+    force   => true,
+    require => [File['php_cli_dir'], Package['php_cli']],
     ensure  => directory,
   }
 
   file { $php::params::cli_ini:
     owner   => root,
     group   => root,
-    require => Package['php-cli'],
+    require => Package['php_cli'],
     ensure  => file,
-    content => template($php::params::tpl_php53cli_ini), 
-  }
+    content => template($php::params::tpl_php53cli_ini),
+ }
 
-  file { $php::params::cli_dir:
-    owner   => root,
-    group   => root,
-    purge   => $php::params::purge_dirs,
-    recurse => true,
-    force   => true,
-    require => Package['php-cli'],
-    ensure  => directory,
-  }
 
-  file { "${php::params::cli_dir}conf.d":
-    ensure => "../conf.d",
-    require => Package['php-cli'],
-  }
 }
