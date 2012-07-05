@@ -514,7 +514,7 @@ memory_limit = -1
 ; Development Value: E_ALL | E_STRICT
 ; Production Value: E_ALL & ~E_DEPRECATED
 ; http://php.net/error-reporting
-error_reporting = <%= cli_error_reporting %>
+error_reporting = <%= error_reporting %>
 
 ; This directive controls whether or not and where PHP will output errors,
 ; notices and warnings too. Error output is very useful during development, but
@@ -531,7 +531,7 @@ error_reporting = <%= cli_error_reporting %>
 ; Development Value: On
 ; Production Value: Off
 ; http://php.net/display-errors
-display_errors = <%= cli_display_errors %>
+display_errors = <%= display_errors %>
 
 ; The display of errors which occur during PHP's startup sequence are handled
 ; separately from display_errors. PHP's default behavior is to suppress those
@@ -542,7 +542,7 @@ display_errors = <%= cli_display_errors %>
 ; Development Value: On
 ; Production Value: Off
 ; http://php.net/display-startup-errors
-display_startup_errors = <%= cli_display_startup_errors %>
+display_startup_errors = <%= display_startup_errors %>
 
 ; Besides displaying errors, PHP can also log errors to locations such as a
 ; server-specific log, STDERR, or a location specified by the error_log
@@ -728,7 +728,7 @@ auto_globals_jit = On
 
 ; Maximum size of POST data that PHP will accept.
 ; http://php.net/post-max-size
-post_max_size = <%= cli_post_max_size %>
+post_max_size = <%= post_max_size %>
 
 ; Magic quotes are a preprocessing feature of PHP where PHP will attempt to
 ; escape any character sequences in GET, POST, COOKIE and ENV data which might
@@ -879,7 +879,7 @@ file_uploads = On
 
 ; Maximum allowed size for uploaded files.
 ; http://php.net/upload-max-filesize
-upload_max_filesize = <%= cli_upload_max_filesize =>
+upload_max_filesize = <%= upload_max_filesize =>
 
 ; Maximum number of files that can be uploaded via a single request
 max_file_uploads = 20

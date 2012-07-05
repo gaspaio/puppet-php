@@ -1,9 +1,9 @@
 class php(
-  $cli_display_errors         = $php::params::display_errors,
-  $cli_display_startup_errors = $php::params::display_startup_errors,
-  $cli_error_reporting        = $php::params::error_reporting,
-  $cli_post_max_size          = $php::params::post_max_size,
-  $cli_upload_max_filesize    = $php::params::upload_max_filesize
+  $display_errors         = $php::params::display_errors,
+  $display_startup_errors = $php::params::display_startup_errors,
+  $error_reporting        = $php::params::error_reporting,
+  $post_max_size          = $php::params::post_max_size,
+  $upload_max_filesize    = $php::params::upload_max_filesize
 ) inherits php::params {
 
   package { 'php_cli':

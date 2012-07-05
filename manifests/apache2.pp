@@ -1,12 +1,12 @@
 class php::apache2(
-  $apache_memory_limit        = $php::params::memory_limit,
-  $apache_max_execution_time  = $php::params::max_execution_time,
-  $apache_max_input_time      = $php::params::max_input_time,
-  $apache_display_errors      = $php::params::display_errors,
-  $apache_display_startup_errors = $php::params::display_startup_errors,
-  $apache_error_reporting     = $php::params::error_reporting,
-  $apache_post_max_size       = $php::params::post_max_size,
-  $apache_upload_max_filesize = $php::params::upload_max_filesize
+  $memory_limit        = $php::params::memory_limit,
+  $max_execution_time  = $php::params::max_execution_time,
+  $max_input_time      = $php::params::max_input_time,
+  $display_errors      = $php::params::display_errors,
+  $display_startup_errors = $php::params::display_startup_errors,
+  $error_reporting     = $php::params::error_reporting,
+  $post_max_size       = $php::params::post_max_size,
+  $upload_max_filesize = $php::params::upload_max_filesize
 ) inherits php::params {
 
   include php
