@@ -11,6 +11,12 @@ class php(
     ensure => present,
   }
 
+  package { 'php':
+    name   => $php::params::php_package_name,
+    ensure => present,
+  }
+
+
   file { 'php_cli_dir':
     path    => $php::params::cli_dir,
     owner   => root,
@@ -58,6 +64,5 @@ class php(
     ensure  => file,
     content => template($php::params::tpl_php53cli_ini),
  }
-
 
 }
