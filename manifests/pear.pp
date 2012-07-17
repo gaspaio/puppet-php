@@ -1,6 +1,6 @@
 # TODO REWRITE THIS USING A CUSTOM TYPE+PROVIDER
 class php::pear inherits php::params {
-  include php
+
 
   package { 'pear':
     name => $php::params::pear_package_name,
