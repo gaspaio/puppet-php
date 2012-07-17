@@ -1,11 +1,16 @@
 # TODO REWRITE THIS USING A CUSTOM TYPE+PROVIDER
+# TODO PUT XDEBUG IN ITS OWN FILE
+# TODO RESTART APACHE WHEN A PHP EXTENSION IS INSTALLED (XDEBUG)
 
 class php::pecl(
   $xdebug_remotehost
 ) inherits php::params {
-  include php
 
   package { 'libpcre3-dev':
+    ensure => present,
+  }
+
+  package { 'make':
     ensure => present,
   }
 
@@ -16,22 +21,22 @@ class php::pecl(
 
 # Install xdebug via PECL
   exec { 'pecl_xdebug':
-    command => "$::php_pecl_exec install xdebug",
-    unless => "$::php_pecl_exec list | grep -i 'xdebug'",
+    command => "pecl install xdebug",
+    unless => "pecl list | grep -i 'xdebug'",
     require => [
-      Package['pear', 'php-dev'],
+      Package['pear', 'php-dev', 'make'],
       Exec['pear_upgrade']
     ],
   }
 
 # Install more recent APC version from PECL
   exec { "pecl_apc":
-    command => "$::php_pecl_exec install apc",
-    unless => "$::php_pecl_exec list | grep -i apc",
+    command => "pecl install apc",
+    unless => "pecl list | grep -i apc",
     require => [
-      Package[
-        'pear','php-dev','libpcre3-dev'
-      ], Exec['pear_upgrade']],
+      Package['pear','php-dev','libpcre3-dev', 'make'],
+      Exec['pear_upgrade']
+    ],
   }
 
   file { $php::params::apc_ini:
