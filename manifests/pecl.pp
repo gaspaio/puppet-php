@@ -15,7 +15,7 @@ class php::pecl(
   }
 
   package { 'php-dev':
-    name => $php::params::php_dev_package_name,
+    name => $php_dev_package_name,
     ensure => present,
   }
 
@@ -39,7 +39,7 @@ class php::pecl(
     ],
   }
 
-  file { $php::params::apc_ini:
+  file { $apc_ini:
     ensure => present,
     owner => 'root',
     group => 'root',
@@ -47,7 +47,7 @@ class php::pecl(
     require => Exec['pecl_apc'],
   }
 
-  file { $php::params::xdebug_ini:
+  file { $xdebug_ini:
     ensure => present,
     content => template("php/xdebug.ini.erb"),
     owner => 'root',

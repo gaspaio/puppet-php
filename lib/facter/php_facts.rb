@@ -10,16 +10,3 @@ Facter.add("php_extension_dir") do
   end
 end
 
-Facter.add("php_pecl_exec") do
-  setcode do
-    cmd = %x[which pecl]
-    cmd.gsub(/\r/,"").gsub(/\n/,"").strip
-  end
-end
-
-Facter.add("php_pear_exec") do
-  setcode do
-    cmd = %x[which pear]
-    cmd.gsub(/\r/,"").gsub(/\n/,"").strip
-  end
-end
