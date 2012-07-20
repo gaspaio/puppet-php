@@ -1,6 +1,7 @@
 # TODO REWRITE THIS USING A CUSTOM TYPE+PROVIDER
-# TODO PUT XDEBUG IN ITS OWN FILE
-# TODO RESTART APACHE WHEN A PHP EXTENSION IS INSTALLED (XDEBUG)
+
+# FIXME xdebug installation doesn't work. The fact used by the template to print the php extension dir is not calculated correctly.
+
 
 class php::pecl(
   $xdebug_remotehost
@@ -53,6 +54,7 @@ class php::pecl(
     owner => 'root',
     group => 'root',
     require => Exec['pecl_xdebug'],
+    notify => Service['httpd'],
   }
 
   file { "apc_php":
@@ -60,5 +62,6 @@ class php::pecl(
     ensure => present,
     source => "puppet:///modules/php/apc.php",
     require => [Package['php'], Exec['pecl_apc']],
+    notify => Service['httpd'],
   }
 }

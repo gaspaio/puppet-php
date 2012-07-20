@@ -7,7 +7,7 @@ class php::pear inherits php::params {
     require => Class['php'],
   }
 
-# upgrades PEAR, installs basic PHP tools
+  # upgrades PEAR, installs basic PHP tools
   exec { "pear_upgrade":
     command => "pear upgrade",
     require => Package['pear'],
@@ -19,18 +19,14 @@ class php::pear inherits php::params {
   }
 
   exec { "pear_phpqatools":
-    command => "pear install pear.phpqatools.org/phpqatools",
+    command => "pear install --alldeps pear.phpqatools.org/phpqatools",
+    unless => "pear list -a | grep phpqatools",
     require => Exec["pear_auto_discover"]
   }
 
-  # install Phing
-  exec { "pear_phing_discover":
-    command => "pear channel-discover pear.phing.info",
-    require => Exec["pear_upgrade"]
-  }
-
-exec { "pear_phing_install":
-    command => "pear install --alldeps phing/phing",
-    require => Exec["pear_upgrade"]
-  }
+  exec { "pear_phing_install":
+      command => "pear install --alldeps pear.phing.info/phing",
+      unless => "pear list -a | grep phing",
+      require => Exec["pear_auto_discover"]
+    }
 }
