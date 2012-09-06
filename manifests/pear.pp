@@ -2,7 +2,7 @@
 class php::pear inherits php::params {
 
   package { 'pear':
-    name => $php::params::pear_package_name,
+    name => $pear_package_name,
     ensure => present,
     require => Class['php'],
   }
